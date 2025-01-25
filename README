@@ -1,0 +1,47 @@
+es-mveety extended globbing
+
+Basic Syntax:
+
+[match pattern]![filter pattern]
+
+Globs take the input set and matches it against the match pattern,
+then it takes the match set and removes all elements that match the
+filter pattern. Either the match or filter pattern can be omitted and
+an empty pattern (ie an empty string) matches nothing.
+
+Patterns are similar to standard POSIX globs with some additions and
+changes:
+
+Character classes:
+	match sets: (pattern|pattern|...)
+		These match against any pattern in the set. The patterns can
+		be any valid pattern.
+
+	class match: [chars or range] ex: [a-z] or [A-Z] or [abcd]
+		These match against any single character in the range. They
+		can be inverted by beginning the match with ~ (ie [~ab]).
+		valid ranges are between a-Z and 0-9.
+
+	wildcards: *, ?, ?n, ?<min-max>
+		match as many chars as possible, one, n, or between min and max
+
+	expansion macro: %string<min-max> or %string<length> (ie %[a-zA-Z]<3-5>)
+		The expansion macro expands to a match set containing the string
+		repeated length or min to max times:
+		ie: %a<3-5> is the same as (aaa|aaaa|aaaaa)
+
+matches all c and zig source files in this project:
+	from the root:
+		(|*/)*.(c|h|zig)
+	match all of es's sources in es-mveety:
+		(|libraries/)*.(c|h|y|es)!libinstall*
+			this will match all .c .y .h and .es files but removes
+			anything that matches libinstall* from the results.
+	match all files with names of 3 to 6 letters and an extension of 3 chars:
+		%[a-Z]<3-6>.?3
+	match a string made of 50 to 100 = signs that starts with a 1 to 6 digit
+	number
+		%[0-9]<1-6>%=<50-100>
+
+see also: https://github.com/mveety/es
+
