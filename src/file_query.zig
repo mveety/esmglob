@@ -87,7 +87,7 @@ pub const FileQuery = struct {
         if (self.files.first == null) return query.QueryError.NoResults;
         var mcur = self.files.first;
         // 32k buffer
-        const buffer = try self.allocator.alloc(u8, 32*1024);
+        const buffer = try self.allocator.alloc(u8, 32 * 1024);
         defer self.allocator.free(buffer);
         while (mcur) |cur| : (mcur = mcur.?.next) {
             const file = std.fs.cwd().openFile(cur.data, .{}) catch continue;

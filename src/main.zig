@@ -88,7 +88,7 @@ pub fn main() !void {
             var match_arena = std.heap.ArenaAllocator.init(root_allocator);
             defer match_arena.deinit();
             var match_allocator = match_arena.allocator();
-            const buf = try match_allocator.alloc(u8, 32*1024);
+            const buf = try match_allocator.alloc(u8, 32 * 1024);
             const g = glob.Glob.new(&match_allocator, opts.pattern) catch |err| {
                 try stderr.print("esmglob: error: {!}\n", .{err});
                 std.process.exit(255);
@@ -195,7 +195,7 @@ pub fn main() !void {
             defer search_arena.deinit();
             var search_allocator = search_arena.allocator();
             const files = opts.things orelse return error.MissingMatchArgs;
-            const buf = try search_allocator.alloc(u8, 32*1024);
+            const buf = try search_allocator.alloc(u8, 32 * 1024);
             const g = glob.Glob.new(&search_allocator, opts.pattern) catch |err| {
                 try stderr.print("esmglob: error: {!}\n", .{err});
                 std.process.exit(255);
