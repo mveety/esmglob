@@ -10,10 +10,21 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
-
     b.installArtifact(exe);
     const run_cmd = b.addRunArtifact(exe);
     run_cmd.step.dependOn(b.getInstallStep());
+
+    _ = b.addModule("esmglob", .{
+        .root_source_file = b.path("src/root.zig"),
+    });
+
+    const lib = b.addStaticLibrary(.{
+        .name = "esmglob",
+        .root_source_file = b.path("src/root.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
+    b.installArtifact(lib);
 
     if (b.args) |args| {
         run_cmd.addArgs(args);
