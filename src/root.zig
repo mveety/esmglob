@@ -26,6 +26,10 @@ pub export fn esmglob_compile(cstrpattern: [*c]const u8) ?*glob.Glob {
     return g;
 }
 
+pub export fn esmglob_free(pattern: *glob.Glob) void {
+    pattern.destroy();
+}
+
 pub export fn esmglob_compiled(pattern: *glob.Glob, cstring: [*c]const u8) i32 {
     const string = std.mem.span(cstring);
     if (matching.match(pattern, string, true, true)) return 1 else return 0;
