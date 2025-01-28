@@ -1,10 +1,13 @@
 #ifndef esmglob_h
 #define esmglob_h
 
+// you should be including this anyway
+#include <stdint.h>
+
 // the glob struct is opaque to the user. it's field is all zig
-typedef struct Glob {
+typedef struct {
 	void *g;
-};
+} Glob;
 
 // pattern, string to match
 // return -1 on error, 0 on no match, 1 on match
